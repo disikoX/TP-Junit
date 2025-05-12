@@ -15,7 +15,7 @@ class Money {
     public Money add(Money m) {
         if (m.currency().equals(currency()))
             return new Money(amount() + m.amount(), currency());
-        return new Money(this, m);
+        // return new Money(this, m);
     }
 
 
