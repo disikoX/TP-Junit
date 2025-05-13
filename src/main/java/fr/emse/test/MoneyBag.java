@@ -32,6 +32,10 @@ public class MoneyBag {
         }
     }
 
+    private void add(Money money) {
+        appendMoney(money);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -49,5 +53,7 @@ public class MoneyBag {
         }
         return true;
     }
+
+
 }
 
