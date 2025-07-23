@@ -1,10 +1,12 @@
 package fr.emse.test;
 
 interface IMoney {
-    public IMoney add(IMoney aMoney);
+    IMoney add(IMoney aMoney);
+    IMoney addMoney(Money m);
+    IMoney addMoneyBag(MoneyBag mb);
 }
 
-class Money {
+class Money implements IMoney {
     private int fAmount;
     private String fCurrency;
     public Money(int amount, String currency) {
@@ -12,12 +14,22 @@ class Money {
         fCurrency = currency;
     }
 
-    public Money add(Money m) {
-        if (m == null) throw new IllegalArgumentException("Money object cannot be null");
-        if (!m.currency().equals(this.currency())) {
-            throw new IllegalArgumentException("Currencies must match: " + this.currency() + " vs " + m.currency());
+    @Override
+    public IMoney add(IMoney m) {
+        return m.addMoney(this);
+    }
+
+    @Override
+    public IMoney addMoney(Money m) {
+        if (m.currency().equals(currency())) {
+            return new Money(amount() + m.amount(), currency());
         }
-        return new Money(this.amount() + m.amount(), this.currency());
+        return new MoneyBag(this, m);
+    }
+
+    @Override
+    public IMoney addMoneyBag(MoneyBag bag) {
+        return bag.addMoney(this);
     }
 
     public int amount() {
